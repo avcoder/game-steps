@@ -28,7 +28,20 @@
 1. Instead of hello world, display 1st quiz question via {{ currentQ().question }}
 1. Go to Vue Devtools, increase index by 1
 
+## Intro to lifecycles
+
+1. Move questions inside data:
+1. Make sure it still works
+1. Intro to lifecycles: mounted
+
+## Intro to v-html template syntax
+
+1. Delete hard coded questions, so it's now `questions: [],`
+1. Try using old fashioned fetch to opentdb.com
+1. To fix weird characters, [use v-html](https://vuejs.org/v2/guide/syntax.html#Raw-HTML)
+1. Mix levels/money with questions object
+
 ## Using async/await/fetch
 
-1. Intro to lifecycles: mounted
-2.
+1. create methods function getJSON() and place fetch code in there
+1. readjust to make it async/await/fetch
