@@ -51,5 +51,10 @@ const app = new Vue({
     index: 0,
     questions,
     message: 'hello world'
+  },
+  methods: {
+    currentQ() {
+      return this.questions[this.index];
+    }
   }
 });
