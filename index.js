@@ -22,12 +22,23 @@ const app = new Vue({
   async mounted() {
     await this.getJSON();
     this.setupSpeechSynthesis();
+    this.setupMusicSounds();
   },
   data: {
     index: 0,
     questions: [],
     message: 'hello world',
-    host: new SpeechSynthesisUtterance()
+    host: new SpeechSynthesisUtterance(),
+    music: new Audio('sounds/Round1.ogg')
+  },
+  computed: {
+    switchMusic() {
+      if (this.index === 2) {
+        this.music.pause();
+        this.music = new Audio('sounds/Round2.ogg');
+        this.setupMusicSounds();
+      }
+    }
   },
   methods: {
     currentQ() {
@@ -56,7 +67,7 @@ const app = new Vue({
 
     setupSpeechSynthesis() {
       this.host.lang = 'en-GB';
-      this.host.rate = 1.2;
+      this.host.rate = 1.0;
       this.host.text = this.currentQ().question;
 
       this.host.voice = speechSynthesis
@@ -64,6 +75,12 @@ const app = new Vue({
         .find(voice => voice.name === 'Google UK English Female');
 
       speechSynthesis.speak(this.host);
+    },
+
+    setupMusicSounds() {
+      this.music.loop = true;
+      this.music.volume = 0.3;
+      this.music.play();
     }
   }
 });

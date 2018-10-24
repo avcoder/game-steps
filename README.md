@@ -52,3 +52,9 @@
 1. Intro to speechSynthesisUtterance
 1. Intro to computed properties
 1. Make it speak the current question
+
+## setup Music/Sounds
+
+1. Download .ogg sound files to /sounds
+1. Intro to Audio API
+1. Intro to computed
