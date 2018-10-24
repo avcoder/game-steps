@@ -19,13 +19,15 @@ const money = [
 // instantiate Vue
 const app = new Vue({
   el: '#layout',
-  mounted() {
-    this.getJSON();
+  async mounted() {
+    await this.getJSON();
+    this.setupSpeechSynthesis();
   },
   data: {
     index: 0,
     questions: [],
-    message: 'hello world'
+    message: 'hello world',
+    host: new SpeechSynthesisUtterance()
   },
   methods: {
     currentQ() {
@@ -34,7 +36,7 @@ const app = new Vue({
 
     async getJSON() {
       const endpoint =
-        "https://opentdb.com/api.php?amount=15&category=18&difficulty=easy&type=multiple";
+        'https://opentdb.com/api.php?amount=15&category=18&difficulty=easy&type=multiple';
       const ajaxQs = [];
       let questionsLevelsMoney = [];
 
@@ -50,6 +52,18 @@ const app = new Vue({
       }));
 
       this.questions.push(...questionsLevelsMoney);
+    },
+
+    setupSpeechSynthesis() {
+      this.host.lang = 'en-GB';
+      this.host.rate = 1.2;
+      this.host.text = this.currentQ().question;
+
+      this.host.voice = speechSynthesis
+        .getVoices()
+        .find(voice => voice.name === 'Google UK English Female');
+
+      speechSynthesis.speak(this.host);
     }
   }
 });

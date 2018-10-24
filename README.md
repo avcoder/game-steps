@@ -45,3 +45,10 @@
 
 1. create methods function getJSON() and place fetch code in there
 1. readjust to make it async/await/fetch
+
+## setup Speech Synthesis to speak question
+
+1. Intro to .find on an array
+1. Intro to speechSynthesisUtterance
+1. Intro to computed properties
+1. Make it speak the current question
