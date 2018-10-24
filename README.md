@@ -58,3 +58,11 @@
 1. Download .ogg sound files to /sounds
 1. Intro to Audio API
 1. Intro to computed
+
+## Use default fn params
+
+1. setupMusicSounds(loop=true, vol=0.3)
+
+## Nvm, use default objects instead
+
+1. setupMusicSounds(config = { loop: true, vol: 0.3 })

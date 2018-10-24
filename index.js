@@ -36,7 +36,7 @@ const app = new Vue({
       if (this.index === 2) {
         this.music.pause();
         this.music = new Audio('sounds/Round2.ogg');
-        this.setupMusicSounds();
+        this.setupMusicSounds({ vol: 1.0 });
       }
     }
   },
@@ -77,9 +77,10 @@ const app = new Vue({
       speechSynthesis.speak(this.host);
     },
 
-    setupMusicSounds() {
-      this.music.loop = true;
-      this.music.volume = 0.3;
+    setupMusicSounds(configMusicObj = { isLooped: true, vol: 0.3 }) {
+      const { isLooped, vol } = configMusicObj;
+      this.music.loop = isLooped;
+      this.music.volume = vol;
       this.music.play();
     }
   }
