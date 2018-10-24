@@ -38,16 +38,18 @@
 
                         <li class="pure-menu-heading">Music</li>
                         <li class="pure-menu-item">
-                            <a href="#" class="pure-menu-link">
+                            <a href="#" class="pure-menu-link" v-on:click="louderMusic">
                                 <span class="email-label-personal"></span>Louder</a>
                         </li>
                         <li class="pure-menu-item">
-                            <a href="#" class="pure-menu-link">
+                            <a href="#" class="pure-menu-link" v-on:click="softerMusic">
                                 <span class="email-label-work"></span>Softer</a>
                         </li>
                         <li class="pure-menu-item">
-                            <a href="#" class="pure-menu-link">
-                                <span class="email-label-travel"></span>&#9658; &#9612;&#9612;</a>
+                            <a href="#" class="pure-menu-link" v-on:click="toggleMusic">
+                                <span class="email-label-travel"></span>
+                                <span v-html="playOrPaused"></span>
+                            </a>
                         </li>
                     </ul>
                 </div>

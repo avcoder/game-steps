@@ -29,7 +29,8 @@ const app = new Vue({
     questions: [],
     message: 'hello world',
     host: new SpeechSynthesisUtterance(),
-    music: new Audio('sounds/Round1.ogg')
+    music: new Audio('sounds/Round1.ogg'),
+    playOrPaused: '&#9612;&#9612;'
   },
   computed: {
     switchMusic() {
@@ -82,6 +83,28 @@ const app = new Vue({
       this.music.loop = isLooped;
       this.music.volume = vol;
       this.music.play();
+    },
+
+    toggleMusic() {
+      if (this.music.paused) {
+        this.playOrPaused = '&#9612;&#9612;';
+        this.music.play();
+        console.info('Music is playing');
+      } else {
+        this.playOrPaused = '&#9658;';
+        this.music.pause();
+        console.info('Music is paused');
+      }
+    },
+
+    louderMusic() {
+      this.music.volume += 0.1;
+      console.info(`Music volume is ${this.music.volume}`);
+    },
+
+    softerMusic() {
+      this.music.volume -= 0.1;
+      console.info(`Music volume is ${this.music.volume}`);
     }
   }
 });

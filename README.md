@@ -59,10 +59,14 @@
 1. Intro to Audio API
 1. Intro to computed
 
-## Use default fn params
+## Use default fn params / objects
 
 1. setupMusicSounds(loop=true, vol=0.3)
+1. OR setupMusicSounds(config = { loop: true, vol: 0.3 })
 
-## Nvm, use default objects instead
+## create methods to control music
 
-1. setupMusicSounds(config = { loop: true, vol: 0.3 })
+1. Intro to v-on:click events
+1. pause music
+1. volume louder
+1. volume softer
