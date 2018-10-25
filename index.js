@@ -36,6 +36,7 @@ const app = new Vue({
     await this.getJSON();
     this.setupSpeechSynthesis();
     this.setupMusicSounds();
+    this.shuffle();
     this.hostSpeaksQs();
   },
   data: {
@@ -101,13 +102,10 @@ const app = new Vue({
     setupSpeechSynthesis() {
       this.host.lang = 'en-GB';
       this.host.rate = 1.0;
-      this.host.text = this.currentQ().question;
 
       this.host.voice = speechSynthesis
         .getVoices()
         .find(voice => voice.name === 'Google UK English Female');
-
-      speechSynthesis.speak(this.host);
     },
 
     // MUSIC SETUP
@@ -153,6 +151,23 @@ const app = new Vue({
       this.possibleAnswers = [...shuffledArr];
     },
 
-    hostSpeaksQs() {}
+    hostSpeaksQs() {
+      // check first if user didn't silence the host's voice
+      if (this.host) {
+        // stop speaking in case it's still speaking
+        speechSynthesis.cancel();
+
+        this.host.text = `${this.currentQ().question} Is it,
+        A, ${this.possibleAnswers[0]}.
+        B, ${this.possibleAnswers[1]}.
+        C, ${this.possibleAnswers[2]}.
+        or D, ${this.possibleAnswers[3]}.
+        `;
+
+        speechSynthesis.speak(this.host);
+      }
+
+      console.log(`correct answer is ${this.currentQ().correct_answer}`);
+    }
   }
 });

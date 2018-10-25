@@ -78,3 +78,4 @@
 ## speak answers, shuffle(), hostSpeaksQs
 
 1. Intro to lodash
+1. create hostSpeaksQs()
