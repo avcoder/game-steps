@@ -70,3 +70,11 @@
 1. pause music
 1. volume louder
 1. volume softer
+
+## make music change based on level/index
+
+1. homework: make sounds/music change bsaed on upon level achieved
+
+## speak answers, shuffle(), hostSpeaksQs
+
+1. Intro to lodash

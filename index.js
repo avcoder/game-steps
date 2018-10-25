@@ -16,6 +16,19 @@ const money = [
   { level: '15', amount: '1,000,000' }
 ];
 
+const musicRound1 = new Audio('sounds/Round1.ogg');
+const musicRound2 = new Audio('sounds/Round2.ogg');
+const musicRound3 = new Audio('sounds/Round3.ogg');
+const soundAskAudience = new Audio('sounds/AskAudience.ogg');
+const soundFifty50 = new Audio('sounds/Fifty50.ogg');
+const soundPhoneFriend = new Audio('sounds/PhoneFriend.ogg');
+const soundFinalAnswer = new Audio('sounds/FinalAnswer.ogg');
+const soundNextQuestion = new Audio('sounds/NextQuestion.ogg');
+const soundRightShort = new Audio('sounds/RightAnswerShort.ogg');
+const soundWinner = new Audio('sounds/Winner.ogg');
+const soundRightAnswer = new Audio('sounds/RightAnswer.ogg');
+const soundWrongAnswer = new Audio('sounds/WrongAnswer.ogg');
+
 // instantiate Vue
 const app = new Vue({
   el: '#layout',
@@ -23,21 +36,39 @@ const app = new Vue({
     await this.getJSON();
     this.setupSpeechSynthesis();
     this.setupMusicSounds();
+    this.hostSpeaksQs();
   },
   data: {
     index: 0,
     questions: [],
     message: 'hello world',
     host: new SpeechSynthesisUtterance(),
-    music: new Audio('sounds/Round1.ogg'),
-    playOrPaused: '&#9612;&#9612;'
+    music: musicRound1,
+    rightSound: soundRightShort,
+    playOrPaused: '&#9612;&#9612;',
+    possibleAnswers: []
   },
   computed: {
     switchMusic() {
-      if (this.index === 2) {
+      if (this.index === 5) {
         this.music.pause();
-        this.music = new Audio('sounds/Round2.ogg');
-        this.setupMusicSounds({ vol: 1.0 });
+        this.music = soundNextQuestion;
+        this.music.play();
+        this.music.onended = () => {
+          this.music = musicRound2;
+          this.setupMusicSounds({ vol: 1.0 });
+        };
+      } else if (this.index === 10) {
+        this.music.pause();
+        this.music = soundRightAnswer;
+        this.music.play();
+        this.music.onended = () => {
+          this.music = musicRound3;
+          this.setupMusicSounds({ vol: 1.0 });
+        };
+      } else {
+        this.rightSound.currentTime = 0;
+        this.rightSound.play();
       }
     }
   },
@@ -66,6 +97,7 @@ const app = new Vue({
       this.questions.push(...questionsLevelsMoney);
     },
 
+    // MAKE BROWSER SPEAK SETUP
     setupSpeechSynthesis() {
       this.host.lang = 'en-GB';
       this.host.rate = 1.0;
@@ -78,8 +110,9 @@ const app = new Vue({
       speechSynthesis.speak(this.host);
     },
 
-    setupMusicSounds(configMusicObj = { isLooped: true, vol: 0.3 }) {
-      const { isLooped, vol } = configMusicObj;
+    // MUSIC SETUP
+    setupMusicSounds(configMusicObj = {}) {
+      const { isLooped = true, vol = 0.3 } = configMusicObj;
       this.music.loop = isLooped;
       this.music.volume = vol;
       this.music.play();
@@ -98,13 +131,28 @@ const app = new Vue({
     },
 
     louderMusic() {
-      this.music.volume += 0.1;
+      this.music.volume += this.music.volume < 0.9 ? 0.1 : 0;
       console.info(`Music volume is ${this.music.volume}`);
     },
 
     softerMusic() {
-      this.music.volume -= 0.1;
+      this.music.volume -= this.music.volume > 0.2 ? 0.1 : 0;
       console.info(`Music volume is ${this.music.volume}`);
-    }
+    },
+
+    // QUESTIONS SETUP
+    shuffle() {
+      // make one array with all the answers in it
+      const tempArr = [
+        this.currentQ().correct_answer,
+        ...this.currentQ().incorrect_answers
+      ];
+
+      // shuffle the array
+      const shuffledArr = _.shuffle(tempArr);
+      this.possibleAnswers = [...shuffledArr];
+    },
+
+    hostSpeaksQs() {}
   }
 });
