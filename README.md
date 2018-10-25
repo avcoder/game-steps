@@ -73,7 +73,7 @@
 
 ## make music change based on level/index
 
-1. homework: make sounds/music change bsaed on upon level achieved
+1. homework: make method switchMusic() to change music based upon level achieved
 
 ## speak answers, shuffle(), hostSpeaksQs
 
@@ -95,3 +95,11 @@
 1. map over your questions' level / amount
 1. create computed reversedQs
 1. Figure out how to display selected class
+
+## setup mouse clicks for a, b, c, d
+
+1. use @click events for all answers
+1. create method isAnswerCorrect()
+1. create method correctAnswer()
+
+## create gameOver()

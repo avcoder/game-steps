@@ -79,13 +79,13 @@
                 </div>
 
                 <div class="email-content-body">
-                    <button id="a" data-id="a" data-key="65">
+                    <button id="a" v-bind:data-picked="unescapedA()" data-key="65" @click="isAnswerCorrect">
                         <span>A:</span>{{ unescapedA() }}</button>
-                    <button id="b" data-id="b" data-key="66">
+                    <button id="b" v-bind:data-picked="unescapedB()" data-key="66" @click="isAnswerCorrect">
                         <span>B:</span>{{ unescapedB() }}</button>
-                    <button id="c" data-id="c" data-key="67">
+                    <button id="c" v-bind:data-picked="unescapedC()" data-key="67" @click="isAnswerCorrect">
                         <span>C:</span>{{ unescapedC() }}</button>
-                    <button id="d" data-id="d" data-key="68">
+                    <button id="d" v-bind:data-picked="unescapedD()" data-key="68" @click="isAnswerCorrect">
                         <span>D:</span>{{ unescapedD() }}</button>
 
                 </div>

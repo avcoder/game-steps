@@ -52,30 +52,6 @@ const app = new Vue({
     isActive: true
   },
   computed: {
-    switchMusic() {
-      if (this.index === 5) {
-        this.music.pause();
-        this.music = soundNextQuestion;
-        this.music.play();
-        this.music.onended = () => {
-          this.music = musicRound2;
-          this.setupMusicSounds({ vol: 1.0 });
-        };
-      } else if (this.index === 10) {
-        this.music.pause();
-        this.music = soundRightAnswer;
-        this.music.play();
-        this.music.onended = () => {
-          this.music = musicRound3;
-          this.setupMusicSounds({ vol: 1.0 });
-        };
-      } else {
-        this.rightSound.currentTime = 0;
-        this.rightSound.play();
-      }
-      // everytime user succeeds, change level
-      this.level -= 1;
-    },
     reverseQs() {
       return _.reverse(this.questions);
     }
@@ -136,6 +112,28 @@ const app = new Vue({
       this.music.loop = isLooped;
       this.music.volume = vol;
       this.music.play();
+    },
+    switchMusic() {
+      if (this.index === 5) {
+        this.music.pause();
+        this.music = soundNextQuestion;
+        this.music.play();
+        this.music.onended = () => {
+          this.music = musicRound2;
+          this.setupMusicSounds({ vol: 1.0 });
+        };
+      } else if (this.index === 10) {
+        this.music.pause();
+        this.music = soundRightAnswer;
+        this.music.play();
+        this.music.onended = () => {
+          this.music = musicRound3;
+          this.setupMusicSounds({ vol: 1.0 });
+        };
+      } else {
+        this.rightSound.currentTime = 0;
+        this.rightSound.play();
+      }
     },
 
     toggleMusic() {
@@ -198,6 +196,28 @@ const app = new Vue({
       // Note lodash doesn't recognize &#039; but only &#39
       // so I'm replacing 039 with 39 before unescaping it
       return _.unescape(str.replace(/039/gi, '39'));
+    },
+
+    correctAnswer() {
+      return this.unescape(this.currentQ().correct_answer);
+    },
+
+    isAnswerCorrect(event) {
+      if (event.target.dataset.picked === this.correctAnswer()) {
+        this.index += 1;
+        this.level -= 1;
+        this.shuffle();
+        this.hostSpeaksQs();
+        this.switchMusic();
+      } else {
+        this.gameOver();
+      }
+    },
+
+    gameOver() {
+      speechSynthesis.cancel();
+      this.music.pause();
+      soundWrongAnswer.play();
     }
   }
 });
