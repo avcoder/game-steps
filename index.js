@@ -41,13 +41,15 @@ const app = new Vue({
   },
   data: {
     index: 0,
+    level: 14, // will work backwards since our list is from top down
     questions: [],
     message: 'hello world',
     host: new SpeechSynthesisUtterance(),
     music: musicRound1,
     rightSound: soundRightShort,
     playOrPaused: '&#9612;&#9612;',
-    possibleAnswers: []
+    possibleAnswers: [],
+    isActive: true
   },
   computed: {
     switchMusic() {
@@ -71,11 +73,31 @@ const app = new Vue({
         this.rightSound.currentTime = 0;
         this.rightSound.play();
       }
+      // everytime user succeeds, change level
+      this.level -= 1;
+    },
+    reverseQs() {
+      return _.reverse(this.questions);
     }
   },
   methods: {
     currentQ() {
       return this.questions[this.index];
+    },
+    unescapedQ() {
+      return this.unescape(this.currentQ().question);
+    },
+    unescapedA() {
+      return this.unescape(this.possibleAnswers[0]);
+    },
+    unescapedB() {
+      return this.unescape(this.possibleAnswers[1]);
+    },
+    unescapedC() {
+      return this.unescape(this.possibleAnswers[2]);
+    },
+    unescapedD() {
+      return this.unescape(this.possibleAnswers[3]);
     },
 
     async getJSON() {
@@ -157,17 +179,25 @@ const app = new Vue({
         // stop speaking in case it's still speaking
         speechSynthesis.cancel();
 
-        this.host.text = `${this.currentQ().question} Is it,
-        A, ${this.possibleAnswers[0]}.
-        B, ${this.possibleAnswers[1]}.
-        C, ${this.possibleAnswers[2]}.
-        or D, ${this.possibleAnswers[3]}.
+        this.host.text = `${this.unescapedQ()} Is it,
+        A, ${this.unescapedA()}.
+        B, ${this.unescapedB()}.
+        C, ${this.unescapedC()}.
+        or D, ${this.unescapedD()}.
         `;
 
         speechSynthesis.speak(this.host);
       }
 
-      console.log(`correct answer is ${this.currentQ().correct_answer}`);
+      console.log(this.unescape(this.currentQ().correct_answer));
+    },
+
+    unescape(str) {
+      // replace html entities with actual characters that they represent
+      // using lodash's unescape method.
+      // Note lodash doesn't recognize &#039; but only &#39
+      // so I'm replacing 039 with 39 before unescaping it
+      return _.unescape(str.replace(/039/gi, '39'));
     }
   }
 });

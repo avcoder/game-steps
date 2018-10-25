@@ -57,13 +57,18 @@
         </div>
 
         <div id="list" class="pure-u-1">
+            <div class="email-item pure-g" v-bind:class="{ 'email-item-unread': i === level, 'email-item-selected' : i > level}" v-for="(q, i) in reverseQs">
+                <div class="pure-u-3-4">
+                    <h2 class="email-subject">{{ q.level }} - ${{ q.amount }}</h2>
+                </div>
+            </div>
         </div>
 
         <div id="main" class="pure-u-1">
             <div class="email-content">
                 <div class="email-content-header pure-g">
                     <div class="pure-u-2-3">
-                        <h1 class="email-content-title" v-html="currentQ().question"></h1>
+                        <h1 class="email-content-title">{{ unescapedQ() }}</h1>
                     </div>
 
                     <div class="email-content-controls pure-u-1-3">
@@ -74,6 +79,14 @@
                 </div>
 
                 <div class="email-content-body">
+                    <button id="a" data-id="a" data-key="65">
+                        <span>A:</span>{{ unescapedA() }}</button>
+                    <button id="b" data-id="b" data-key="66">
+                        <span>B:</span>{{ unescapedB() }}</button>
+                    <button id="c" data-id="c" data-key="67">
+                        <span>C:</span>{{ unescapedC() }}</button>
+                    <button id="d" data-id="d" data-key="68">
+                        <span>D:</span>{{ unescapedD() }}</button>
 
                 </div>
             </div>

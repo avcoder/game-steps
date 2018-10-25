@@ -79,3 +79,19 @@
 
 1. Intro to lodash
 1. create hostSpeaksQs()
+1. create unescape(),
+1. create methods unescapedQ/A/B/C/D
+1. switch v-html to {{ unescapedQ() }}
+1. use unescapedQABCD in hostSpeaksQs
+
+## Display multiple choice options
+
+1. Use <button> and display:flex
+
+## Display side-level/score tracker
+
+1. Intro to v-for
+1. Hard code html markup for 1 email
+1. map over your questions' level / amount
+1. create computed reversedQs
+1. Figure out how to display selected class
