@@ -59,8 +59,9 @@
 
       <div id="list" class="pure-u-1">
         <div
-          class="email-item email-item-selected pure-g"
-          v-for="item in items"
+          class="email-item email-item-unread pure-g"
+          v-for="(item, i) in items"
+          v-bind:class="{ 'email-item-selected': i === index}"
         >
           <div class="pure-u-3-4">
             <h4 class="email-subject">{{ item.level }} - ${{ item.amount }}</h4>
