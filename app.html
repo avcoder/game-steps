@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A layout example that shows off a responsive email layout."
+    />
+    <title>Email &ndash; Layout Examples &ndash; Pure</title>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+      integrity="sha384-"
+      crossorigin="anonymous"
+    />
+
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="css/layouts/email-old-ie.css" />
+    <![endif]-->
+    <!-- [if gt IE 8]><! -->
+    <link rel="stylesheet" href="css/layouts/email.css" />
+    <!-- <![endif] -->
+  </head>
+
+  <body>
+    <div id="layout" class="content pure-g">
+      <div id="nav" class="pure-u">
+        <a href="#" class="nav-menu-button">Menu</a>
+
+        <div class="nav-inner">
+          <button class="primary-button pure-button" @click="beginPlay">
+            Play
+          </button>
+
+          <div class="pure-menu">
+            <ul class="pure-menu-list">
+              <li class="pure-menu-heading">Lifelines</li>
+              <li class="pure-menu-item">
+                <a href="#" class="pure-menu-link">
+                  <span class="email-label-personal"></span>50:50</a
+                >
+              </li>
+              <li class="pure-menu-item">
+                <a href="#" class="pure-menu-link">
+                  <span class="email-label-work"></span>Ask Audience</a
+                >
+              </li>
+              <li class="pure-menu-item">
+                <a href="#" class="pure-menu-link">
+                  <span class="email-label-travel"></span>Phone Friend</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="list" class="pure-u-1">
+        <div
+          class="email-item email-item-selected pure-g"
+          v-for="item in items"
+        >
+          <div class="pure-u-3-4">
+            <h4 class="email-subject">{{ item.level }} - ${{ item.amount }}</h4>
+          </div>
+        </div>
+      </div>
+
+      <template v-if="isPlaying">
+        <div id="main" class="pure-u-1">
+          <div class="email-content">
+            <div class="email-content-header pure-g">
+              <div class="pure-u-2-3">
+                <h1 class="email-content-title">
+                  {{ currentQ().question | unescape }}
+                </h1>
+              </div>
+
+              <!--
+                <div class="email-content-controls pure-u-1-3">
+                    <button class="secondary-button pure-button">50:50</button>
+                    <button class="secondary-button pure-button">Ask the Audience</button>
+                    <button class="secondary-button pure-button">Phone a Friend</button>
+                </div>
+              -->
+            </div>
+
+            <div class="email-content-body">
+              <button
+                id="a"
+                @click="isAnswerCorrect"
+                data-index="0"
+                data-key="65"
+              >
+                A: {{ possibleAnswers(0) }}
+              </button>
+              <button
+                id="b"
+                @click="isAnswerCorrect"
+                data-index="1"
+                data-key="66"
+              >
+                B: {{ possibleAnswers(1) }}
+              </button>
+              <button
+                id="c"
+                @click="isAnswerCorrect"
+                data-index="2"
+                data-key="67"
+              >
+                C: {{ possibleAnswers(2) }}
+              </button>
+              <button
+                id="d"
+                @click="isAnswerCorrect"
+                data-index="3"
+                data-key="68"
+              >
+                D: {{ possibleAnswers(3) }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div id="main" class="pure-u-1"><h1>Press Play to begin</h1></div>
+      </template>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
